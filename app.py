@@ -48,9 +48,8 @@ if uploaded_files:
         except Exception as e:
             st.warning(f"Failed to process file: {file}. Error: {e}")
     st.session_state.base64_images = base64_images
-    st.success(f"{len(base64_images)} image(s) uploaded successfully.")
 else:
-    st.info("No file uploaded.")
+    print("No file uploaded.")
 
 
 
