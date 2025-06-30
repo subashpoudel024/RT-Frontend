@@ -50,7 +50,8 @@ else:
     print("No file uploaded.")
 
 if st.button("Submit"):
-    if not st.session_state.details_completed:
+    if st.session_state.details_completed ==True:
+    # if not st.session_state.details_completed:
         with st.spinner("Analyzing your business context..."):
             resp = requests.post(f"{API_URL}/context-analysis", json={"message": msg})
             if resp.ok:
