@@ -23,7 +23,7 @@ if 'generated_image' not in st.session_state:
 
 
 # ---------------------- BRAINSTORM ----------------------
-st.subheader("Step 4: Story Boarding with brainstorming")
+st.subheader("Story Boarding with brainstorming")
 
 defaults = {
     "selected_topics": [],
