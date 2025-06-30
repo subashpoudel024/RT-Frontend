@@ -35,19 +35,19 @@ for key, val in defaults.items():
 st.subheader("How can I help you?")
 msg = st.text_input("")
 
-uploaded_files = st.file_uploader("\U0001F4C2 Upload reference images (optional)", type=['png', 'jpg', 'jpeg'], key="initial_image_uploader")
-if uploaded_files:
-    base64_images = []
-    for file in uploaded_files:
-        try:
-            file_bytes = file if isinstance(file, bytes) else file.read()
-            base64_str = base64.b64encode(file_bytes).decode('utf-8')
-            base64_images.append(base64_str)
-        except Exception as e:
-            st.warning(f"Failed to process file: {file}. Error: {e}")
-    st.session_state.base64_images = base64_images
-else:
-    print("No file uploaded.")
+# uploaded_files = st.file_uploader("\U0001F4C2 Upload reference images (optional)", type=['png', 'jpg', 'jpeg'], key="initial_image_uploader")
+# if uploaded_files:
+#     base64_images = []
+#     for file in uploaded_files:
+#         try:
+#             file_bytes = file if isinstance(file, bytes) else file.read()
+#             base64_str = base64.b64encode(file_bytes).decode('utf-8')
+#             base64_images.append(base64_str)
+#         except Exception as e:
+#             st.warning(f"Failed to process file: {file}. Error: {e}")
+#     st.session_state.base64_images = base64_images
+# else:
+#     print("No file uploaded.")
 
 if st.button("Submit"):
     if st.session_state.details_completed ==True:
