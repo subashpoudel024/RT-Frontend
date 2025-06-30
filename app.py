@@ -41,12 +41,17 @@ uploaded_files = st.file_uploader("📂 Upload reference images (optional)", typ
 if uploaded_files:
     base64_images = []
     for file in uploaded_files:
-        base64_images.append(base64.b64encode(file.read()).decode('utf-8'))
+        try:
+            file_bytes = file if isinstance(file, bytes) else file.read()
+            base64_str = base64.b64encode(file_bytes).decode('utf-8')
+            base64_images.append(base64_str)
+        except Exception as e:
+            st.warning(f"Failed to process file: {file}. Error: {e}")
     st.session_state.base64_images = base64_images
-    print('Base 64 image:',base64_images)
-
+    st.success(f"{len(base64_images)} image(s) uploaded successfully.")
 else:
-    print('File not uploaded')
+    st.info("No file uploaded.")
+
 
 
 if st.button("Submit"):
