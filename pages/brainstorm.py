@@ -67,6 +67,29 @@ def call_brainstorming_api():
         st.error("❌ API call failed.")
         st.write(response.text)
 
+if st.button("🚀 Start Brainstorm"):
+    with st.spinner('Generating story with brainstorming....'):
+        # Truncate future if we're not at the end
+        if st.session_state.history_index < len(st.session_state.history) - 1:
+            st.session_state.history = st.session_state.history[:st.session_state.history_index + 1]
+
+        # Save current state to history
+        current_state = {
+            "selected_topics": st.session_state.selected_topics.copy(),
+            "selected_from_brainstorm": st.session_state.selected_from_brainstorm.copy(),
+            "story": st.session_state.story,
+            "brainstorming_topics": st.session_state.brainstorming_topics.copy()
+        }
+        st.session_state.history.append(current_state)
+        st.session_state.history_index += 1
+
+        # Update current state
+        st.session_state.selected_topics.extend(st.session_state.selected_from_brainstorm)
+        st.session_state.selected_from_brainstorm = []
+
+        call_brainstorming_api()
+        st.rerun()
+
 col1, col2 = st.columns(2)
 
 with col1:
@@ -112,28 +135,6 @@ with col2:
 
     else:
         st.info("No brainstorming topics yet. Click 'Generate Brainstorm' to start.")
-
-if st.button("🚀 Brainstorm"):
-    # Truncate future if we're not at the end
-    if st.session_state.history_index < len(st.session_state.history) - 1:
-        st.session_state.history = st.session_state.history[:st.session_state.history_index + 1]
-
-    # Save current state to history
-    current_state = {
-        "selected_topics": st.session_state.selected_topics.copy(),
-        "selected_from_brainstorm": st.session_state.selected_from_brainstorm.copy(),
-        "story": st.session_state.story,
-        "brainstorming_topics": st.session_state.brainstorming_topics.copy()
-    }
-    st.session_state.history.append(current_state)
-    st.session_state.history_index += 1
-
-    # Update current state
-    st.session_state.selected_topics.extend(st.session_state.selected_from_brainstorm)
-    st.session_state.selected_from_brainstorm = []
-
-    call_brainstorming_api()
-    st.rerun()
 
 if st.button("🔙 Back"):
     if st.session_state.history_index > 0:
